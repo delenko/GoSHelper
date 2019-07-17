@@ -23,7 +23,7 @@ namespace GoSBot
 
             discord = new DiscordClient(new DiscordConfiguration
             {
-                Token = "NTk3NTE4NzUzNDE2MjE2NTk2.XSJSJg.Qvw5_HlTi0xggw9DYi3KgBkh3yY",
+                Token = "Your token",
                 TokenType = TokenType.Bot,
                 UseInternalLogHandler = true,
                 AutoReconnect = true,
