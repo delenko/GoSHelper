@@ -1,11 +1,8 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using DSharpPlus.Exceptions;
 
 namespace GoSBot
 {
@@ -18,7 +15,7 @@ namespace GoSBot
         {
             await ctx.RespondAsync("((Vizier Level * 5000) * Total Military Talent) + Military Attributes");
         }
-        
+
         [Command("vpform")]
         [Description("You use this command to figure out your power")]
         public async Task VizierPowerForm(CommandContext ctx, [Description("Your viziers power")] ulong vLevel,
@@ -38,22 +35,22 @@ namespace GoSBot
             ulong largeTotal = lBook * 1000;
             ulong xLargeTotal = xlBook * 5000;
             ulong almightyTotal = almightyBook * 40000;
-            ulong bookTotal = smallTotal + mediumTotal+largeTotal+xLargeTotal+almightyTotal;
+            ulong bookTotal = smallTotal + mediumTotal + largeTotal + xLargeTotal + almightyTotal;
             ulong topPower = bookTotal + empirePower;
             ulong gainedPower = topPower - empirePower;
             await ctx.RespondAsync($"Your gain was : {gainedPower}. Your total power is: {topPower}");
         }
         [Command("militarybadges")]
         [Description("This is the total of what military badges would give you to your empire power.")]
-        public async Task militarybadges(CommandContext ctx,[Description("Enter how many military badges your wanting to check")] ulong mBadges,
-           [Description("Enter in the stars for the talent your wanting to level")] ulong mStars,[Description("Enter your vizier level")] ulong vLevel)
+        public async Task militarybadges(CommandContext ctx, [Description("Enter how many military badges your wanting to check")] ulong mBadges,
+           [Description("Enter in the stars for the talent your wanting to level")] ulong mStars, [Description("Enter your vizier level")] ulong vLevel)
         {
             switch (mStars)
             {
                 case 1:
                     {
                         ulong totalBadge = 1 * mBadges;
-                        ulong totalMilitaryTalent = totalBadge ;
+                        ulong totalMilitaryTalent = totalBadge;
                         ulong militaryEmpire = totalMilitaryTalent * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
                         await ctx.RespondAsync($"Your military badges give you a gain of: {militaryEmpire}.");
                         break;
@@ -116,7 +113,7 @@ namespace GoSBot
                         }
                         else
                         {
-                            ulong totalMilitaryTalent = Convert.ToUInt64(Math.Truncate(totalBadge)) ;
+                            ulong totalMilitaryTalent = Convert.ToUInt64(Math.Truncate(totalBadge));
                             ulong militaryEmpire = totalMilitaryTalent * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
                             await ctx.RespondAsync($"Your military badges give you a gain of: {militaryEmpire}.");
                         }
@@ -267,7 +264,7 @@ namespace GoSBot
                         double politicalBadge = .5 * poBadges;
                         if (politicalBadge < 1)
                         {
-                           ulong politicalEmpire = 0;
+                            ulong politicalEmpire = 0;
                             await ctx.RespondAsync($"Your political badges give you a gain of: {politicalEmpire}.");
                         }
                         else
@@ -355,109 +352,109 @@ namespace GoSBot
         public async Task prestigeBadges(CommandContext ctx, [Description("Enter how many prestige badges your wanting to check")] ulong prBadges,
            [Description("Enter in the stars for the talent your wanting to level")] ulong prStars, [Description("Enter your vizier level")] ulong vLevel)
         {
-            
-                switch (prStars)
-                {
-                    case 1:
-                        {
-                            double prestigeBadges = 1 * prBadges;
-                            ulong prestigeTotal = Convert.ToUInt64(prestigeBadges);
-                            ulong prestigeEmpire = prestigeTotal * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            break;
-                        }
-                    case 2:
-                        {
-                            double prestigeTotal = .5 * prBadges;
-                            if (prestigeTotal < 1)
-                            {
-                                ulong prestigeEmpire = 0;
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
 
-                            }
-                            else
-                            {
-                                ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
-                                ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            break;
-                        }
-                    case 3:
+            switch (prStars)
+            {
+                case 1:
+                    {
+                        double prestigeBadges = 1 * prBadges;
+                        ulong prestigeTotal = Convert.ToUInt64(prestigeBadges);
+                        ulong prestigeEmpire = prestigeTotal * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                        await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        break;
+                    }
+                case 2:
+                    {
+                        double prestigeTotal = .5 * prBadges;
+                        if (prestigeTotal < 1)
                         {
-                            double prestigeTotal = .33 * prBadges;
-                            if (prestigeTotal < .99)
-                            {
-                                ulong prestigeEmpire = 0;
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            else
-                            {
-                                ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
-                                ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            break;
+                            ulong prestigeEmpire = 0;
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+
                         }
-                    case 4:
+                        else
                         {
-                            double prestigeTotal = .25 * prBadges;
-                            if (prestigeTotal < 1)
-                            {
-                                ulong prestigeEmpire = 0;
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            else
-                            {
-                                ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
-                                ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            break;
+                            ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
+                            ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
                         }
-                    case 5:
+                        break;
+                    }
+                case 3:
+                    {
+                        double prestigeTotal = .33 * prBadges;
+                        if (prestigeTotal < .99)
                         {
-                            double prestigeTotal = .20 * prBadges;
-                            if (prestigeTotal < 1)
-                            {
-                                ulong prestigeEmpire = 0;
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            else
-                            {
-                                ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
-                                ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            break;
+                            ulong prestigeEmpire = 0;
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
                         }
-                    case 6:
+                        else
                         {
-                            double prestigeTotal = .17 * prBadges;
-                            if (prestigeTotal < 1)
-                            {
-                                ulong prestigeEmpire = 0;
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            else
-                            {
-                                ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
-                                ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
-                                await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
-                            }
-                            break;
+                            ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
+                            ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
                         }
-                    default:
+                        break;
+                    }
+                case 4:
+                    {
+                        double prestigeTotal = .25 * prBadges;
+                        if (prestigeTotal < 1)
                         {
-                            await ctx.RespondAsync("Must enter a star rating");
-                            break;
+                            ulong prestigeEmpire = 0;
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
                         }
-                }
+                        else
+                        {
+                            ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
+                            ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        }
+                        break;
+                    }
+                case 5:
+                    {
+                        double prestigeTotal = .20 * prBadges;
+                        if (prestigeTotal < 1)
+                        {
+                            ulong prestigeEmpire = 0;
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        }
+                        else
+                        {
+                            ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
+                            ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        }
+                        break;
+                    }
+                case 6:
+                    {
+                        double prestigeTotal = .17 * prBadges;
+                        if (prestigeTotal < 1)
+                        {
+                            ulong prestigeEmpire = 0;
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        }
+                        else
+                        {
+                            ulong pTotalB = Convert.ToUInt64(Math.Truncate(prestigeTotal));
+                            ulong prestigeEmpire = pTotalB * ((((vLevel - 1) * (vLevel + 2)) / 10) + 10);
+                            await ctx.RespondAsync($"Your prestige badges give you a gain of: {prestigeEmpire}.");
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        await ctx.RespondAsync("Must enter a star rating");
+                        break;
+                    }
+            }
         }
         [Command("totalgain")]
         [Description("This tallies up all the gain from books and badges.")]
-        public async Task totalGain(CommandContext ctx,[Description("Your total book xp gain.")] ulong books,[Description("Your total military badge gain.")] ulong military,
-            [Description("Your total research badge gain")] ulong research,[Description("Your total political badge gain.")] ulong political,
+        public async Task totalGain(CommandContext ctx, [Description("Your total book xp gain.")] ulong books, [Description("Your total military badge gain.")] ulong military,
+            [Description("Your total research badge gain")] ulong research, [Description("Your total political badge gain.")] ulong political,
             [Description("Your total prestige gain.")] ulong prestige)
         {
             ulong empirePower = books + military + research + political + prestige;
@@ -472,39 +469,70 @@ namespace GoSBot
             };
             await ctx.RespondAsync(embed: embed);
         }
-        [Group("Admin")]
-        [Description("Administrative Commands")]
-        [Hidden]
-        [RequirePermissions(DSharpPlus.Permissions.ManageGuild)]
-        public class AdminCommands
-        {
-            [Command("role"), Description("Give user role indicated."),Hidden,RequirePermissions(DSharpPlus.Permissions.ManageRoles)]
-            public async Task GiveRole(CommandContext ctx, [Description("the user you want to change the role of.")] DiscordMember member,
+        [Command("grantrole"), Description("Give user role indicated."), RequirePermissions(DSharpPlus.Permissions.ManageRoles)]
+        public async Task GiveRole(CommandContext ctx, [Description("the user you want to change the role of.")] DiscordMember member,
                 [Description("role your wanting to change them to")]DiscordRole discordRole)
+        {
+            try
             {
-                try
+
+                var roleGiven = discordRole.Name;
+                var verifyRole = discordRole.Id;
+                var roleCheck = member.Guild.GetRole(verifyRole).ToString();
+                string[] membersInfo = roleCheck.Split(" ");
+                if (membersInfo[2] == roleGiven)
                 {
-                    if (member.Roles.Equals(discordRole))
-                    {
-                        await ctx.RespondAsync("User already contains this role!");
-                    }
-                    else
-                    {
-                        await member.GrantRoleAsync(discordRole);
-                    }
+                    await ctx.RespondAsync("User already contains this role!");
                 }
-                catch (Exception)
+                else
                 {
-                    var emoji = DiscordEmoji.FromName(ctx.Client, ":-1:");
-                    await ctx.RespondAsync(emoji);
+                    await member.GrantRoleAsync(discordRole);
                 }
             }
-            [Command("nick"),Description("Give nickname to user"),Hidden,RequirePermissions(DSharpPlus.Permissions.ManageNicknames)]
-            public async Task Nick(CommandContext ctx, [Description("the user your changing the nickname of")] DiscordMember member,
-                [RemainingText,Description("name your wanting to place")]string nickName)
+            catch (Exception)
             {
-                await member.ModifyAsync(nickName, reason: $"Changed by {ctx.User.Username}({ ctx.User.Id})");
+                var emoji = DiscordEmoji.FromName(ctx.Client, ":-1:");
+                await ctx.RespondAsync(emoji);
             }
+        }
+        [Command("removerole"), Description("Give user role indicated."), RequirePermissions(DSharpPlus.Permissions.ManageRoles)]
+        public async Task RemoveRole(CommandContext ctx, [Description("the user you want to change the role of.")] DiscordMember member,
+                [Description("role your wanting to remove")]DiscordRole discordRole)
+        {
+            try
+            {
+                var roleGiven = discordRole.Name;
+                var verifyRole = discordRole.Id;
+                var roleCheck = member.Guild.GetRole(verifyRole).ToString();
+                string[] membersInfo = roleCheck.Split(" ");
+                if (membersInfo[2] == roleGiven)
+                {
+                    await member.RevokeRoleAsync(discordRole);
+                    await ctx.RespondAsync($"The user {member} has lost {discordRole}!");
+                }
+                else
+                {
+                    await ctx.RespondAsync("User does not contain that role!");
+                }
+            }
+            catch (Exception)
+            {
+                var emoji = DiscordEmoji.FromName(ctx.Client, ":-1:");
+                await ctx.RespondAsync(emoji);
+            }
+        }
+        [Command("nick"), Description("Give nickname to user"), RequirePermissions(DSharpPlus.Permissions.ManageNicknames)]
+        public async Task Nick(CommandContext ctx, [Description("the user your changing the nickname of")] DiscordMember member,
+                [RemainingText, Description("name your wanting to place")]string nickName)
+        {
+            await member.ModifyAsync(nickName, reason: $"Changed by {ctx.User.Username}({ ctx.User.Id})");
+        }
+        [Command("getroleid"), Description("Gets role ID"), RequireUserPermissions(DSharpPlus.Permissions.ManageRoles)]
+        public async Task getRoleID(CommandContext ctx, [Description("Gets role ID")]ulong role)
+        {
+            var roles = ctx.Member.Guild.GetRole(role);
+            await ctx.RespondAsync(roles.ToString());
+
         }
     }
 }
