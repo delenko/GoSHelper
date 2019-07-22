@@ -480,14 +480,19 @@ namespace GoSBot
                 var verifyRole = discordRole.Id;
                 var roleCheck = member.Guild.GetRole(verifyRole).ToString();
                 string[] membersInfo = roleCheck.Split(" ");
-                if (membersInfo[2] == roleGiven)
+                bool results = false; 
+                for (int i = 0; i < membersInfo.Length; i++)
                 {
-                    await ctx.RespondAsync("User already contains this role!");
+                    if (membersInfo[i] == roleGiven)
+                    {
+                        results = true;
+                    }
+                    else
+                    {
+                        await member.GrantRoleAsync(discordRole);
+                    }
                 }
-                else
-                {
-                    await member.GrantRoleAsync(discordRole);
-                }
+                
             }
             catch (Exception)
             {
@@ -495,7 +500,7 @@ namespace GoSBot
                 await ctx.RespondAsync(emoji);
             }
         }
-        [Command("removerole"), Description("Give user role indicated."), RequirePermissions(DSharpPlus.Permissions.ManageRoles)]
+        [Command("removerole"), Description("Remove user role indicated."), RequirePermissions(DSharpPlus.Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext ctx, [Description("the user you want to change the role of.")] DiscordMember member,
                 [Description("role your wanting to remove")]DiscordRole discordRole)
         {
@@ -505,14 +510,17 @@ namespace GoSBot
                 var verifyRole = discordRole.Id;
                 var roleCheck = member.Guild.GetRole(verifyRole).ToString();
                 string[] membersInfo = roleCheck.Split(" ");
-                if (membersInfo[2] == roleGiven)
+                for (int i = 0; i < membersInfo.Length; i++)
                 {
-                    await member.RevokeRoleAsync(discordRole);
-                    await ctx.RespondAsync($"The user {member} has lost {discordRole}!");
-                }
-                else
-                {
-                    await ctx.RespondAsync("User does not contain that role!");
+                    if (membersInfo[i] == roleGiven)
+                    {
+                        await member.RevokeRoleAsync(discordRole);
+                        await ctx.RespondAsync($"The user {member} has lost {discordRole}!");
+                    }
+                    else
+                    {
+                        await ctx.RespondAsync("User does not contain that role!");
+                    }
                 }
             }
             catch (Exception)
@@ -533,6 +541,57 @@ namespace GoSBot
             var roles = ctx.Member.Guild.GetRole(role);
             await ctx.RespondAsync(roles.ToString());
 
+        }
+        [Command("addsuggestion"),Description("Adds to the correct channel.")]
+        public async Task addSuggestion(CommandContext ctx, [RemainingText][Description("The user's suggestion")]string suggestion)
+        {
+           
+                var embed = new DiscordEmbedBuilder
+                {
+                    Description = $"{suggestion}",
+                    Color = ctx.Member.Color,
+                    Author = new DiscordEmbedBuilder.EmbedAuthor
+                    {
+                        Name = ctx.Message.Author is DiscordMember m ? m.Username : ctx.Message.Author.Username,
+                        IconUrl = ctx.Message.Author.AvatarUrl
+                    }
+
+                };
+                await ctx.RespondAsync(embed: embed);
+            
+        }
+        [Command("tutorandheir"),Description("Displays information on tutor and heir help")]
+        public async Task tutorandheir(CommandContext ctx)
+        { 
+            await ctx.RespondAsync("https://gossultan.wordpress.com/2019/07/06/heir-dispatch-and-tutoring/");
+        }
+        [Command("nextrush")]
+        public async Task nextRush(CommandContext ctx, [Description("Displays rush schedule from now")]string rush)
+        {
+            string[] rushSchedule = new string[4] { "power", "arena", "intimacy", "union" };
+            int count = 0;
+                for (int i = 0; i < rushSchedule.Length; i++)
+                {
+                    if (rushSchedule[i] == rush)
+                    {
+                        count = i;
+                        
+                    if (i > 3)
+                    {
+                        count = 0;
+                        i = 0;
+                    }
+                    break;
+                }
+                    
+                }
+                await ctx.RespondAsync($"The current rush is {rush}.");
+            if (count >= 3)
+            {
+                count = 0;
+                await ctx.RespondAsync($"The next rush is {rushSchedule[count]}");
+
+            }
         }
     }
 }
